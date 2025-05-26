@@ -48,8 +48,6 @@ export function createEmptyPatient() {
     profession: "",
     niveauEducation: "Analphabète" as Patient["niveauEducation"],
     situationMatrimoniale: "Mariée" as Patient["situationMatrimoniale"],
-    // | "Divorcée"
-    // | "Veuve",
     origine: "",
     couvertureMedicale: false,
 

@@ -3,11 +3,16 @@
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { getTodayDate } from "@/lib/utils";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 export function FormHeader() {
-  const { control, register } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <Card className="bg-primary/5">
@@ -16,35 +21,65 @@ export function FormHeader() {
           <h2 className="text-xl font-semibold">
             Fiche de Collecte de Données – Analgésie Péridurale
           </h2>
-          <p className="text-muted-foreground">Hôpital de Tivaouane</p>
+          <p className="text-muted-foreground">
+            Hôpital de Tivaouane Docteur Serigne DES Modou Faye{" "}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="investigateur">Investigateur</Label>
-            <Input
-              id="investigateur"
-              {...register("investigateur")}
-              placeholder="Nom de l'investigateur"
+            <FormField
+              control={control}
+              name="investigateur"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Investigateur *</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Nom de l'investigateur"
+                      {...field}
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="date">Date</Label>
-            <Input
-              id="date"
-              type="date"
-              {...register("date")}
-              defaultValue={getTodayDate()}
+            <FormField
+              control={control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date *</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} required />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="patientNo">N° Patient</Label>
-            <Input
-              id="patientNo"
-              {...register("patientNo")}
-              placeholder="Numéro d'identification"
+            <FormField
+              control={control}
+              name="patientNo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>N° Patient *</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Numéro d'identification du patient"
+                      {...field}
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
         </div>

@@ -183,7 +183,6 @@ interface PatientFormProps {
 export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
-  // const [data, setData] = useState<Patient>(initialData);
   const { addPatient, getPatient, updatePatient } = useData();
 
   const methods = useForm<z.infer<typeof formSchema>>({
@@ -295,7 +294,7 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
   // const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
 
   // Show different step components based on current step
-  const StepComponent = () => {
+  const rendeStepComponent = () => {
     switch (currentStep) {
       case 0:
         return <FormStep1 />;
@@ -322,7 +321,7 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
         <form onSubmit={handleSubmit((data) => onSubmit(data as Patient))}>
           <FormHeader />
 
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between my-4">
             <h2 className="text-xl font-semibold">
               {currentStep + 1}. {STEPS[currentStep]}
             </h2>
@@ -330,16 +329,8 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
               Étape {currentStep + 1} / {STEPS.length}
             </div>
           </div>
-          {/* 
-          <Progress
-            max={100}
-            value={Math.min(Math.max(progressPercentage || 0, 0), 100)}
-            className="h-2 mb-8"
-          /> */}
 
-          <Card className="p-6">
-            <StepComponent />
-          </Card>
+          <Card className="p-6">{rendeStepComponent()}</Card>
 
           <div className="flex justify-between pt-4">
             <div>
