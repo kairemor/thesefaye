@@ -12,11 +12,11 @@ import { FormStep5 } from "@/components/patient-form/form-step5";
 import { FormStep6 } from "@/components/patient-form/form-step6";
 import { FormStep7 } from "@/components/patient-form/form-step7";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
+import { useData } from "@/lib/data-context";
 
 const STEPS = [
   "Données Socio-Démographiques",
@@ -31,8 +31,8 @@ const STEPS = [
 const formSchema = z.object({
   // Header fields
   date: z.string(),
-  investigateur: z.string(),
-  patientNo: z.string(),
+  investigateur: z.string().min(1, "L'investigateur est requise"),
+  patientNo: z.string().min(1, "Le numero du patient est requis"),
 
   // Step 1: Données Socio-Démographiques
   age: z
@@ -164,7 +164,16 @@ const formSchema = z.object({
     autres: z.boolean(),
     autresDetails: z.string().optional(),
   }),
+  complicationsTardives: z.object({
+    nevralgieOuDysesthesis: z.boolean(),
+    syndromeQueueCheval: z.boolean(),
+    adherencePeriduraleOuFibrose: z.boolean(),
+    autres: z.boolean(),
+    autresDetails: z.string().optional(),
+  }),
 });
+
+export type PatientForm = z.infer<typeof formSchema>;
 
 interface PatientFormProps {
   initialData: Patient;
@@ -174,7 +183,8 @@ interface PatientFormProps {
 export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
-  const [data, setData] = useState<Patient>(initialData);
+  // const [data, setData] = useState<Patient>(initialData);
+  const { addPatient, getPatient, updatePatient } = useData();
 
   const methods = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -187,26 +197,63 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
     formState: { errors, isSubmitting, isDirty },
   } = methods;
 
-  const updateFields = (fields: Partial<Patient>) => {
-    console.log(fields);
-    console.log(data);
-    setData((prev) => ({ ...prev, ...fields }));
-  };
-
   const getFieldsForStep = (step: number): string[] => {
     switch (step) {
-      case 0: // Basic Info
-        return ["title", "propertyType", "transactionType", "price"];
-      case 1: // Location
-        return ["address", "region", "coordinates"];
-      case 2: // Details
-        return ["area", "bedrooms", "bathrooms", "floors"];
-      case 3: // Amenities
-        return ["amenities"];
-      case 4: // Images
-        return ["images"];
-      case 5: // Description
-        return ["description"];
+      case 0: // Header fields // Données Socio-Démographiques
+        return [
+          "date",
+          "investigateur",
+          "patientNo",
+          "age",
+          "profession",
+          "niveauEducation",
+          "situationMatrimoniale",
+          "origine",
+          "couvertureMedicale",
+          "typeCouverture",
+        ];
+      case 1: // Antécédents
+        return [
+          "antecedentsMedicaux",
+          "antecedentsObstetricaux",
+          "allergies",
+          "allergiesAgent",
+        ];
+      case 2: // Grossesse Actuelle
+        return [
+          "ageGestationnel",
+          "suiviPrenatal",
+          "nombreConsultations",
+          "pathologiesAssociees",
+        ];
+      case 3: // Travail
+        return [
+          "declenchementTravail",
+          "methodesDeclenchement",
+          "dureeTravail",
+          "scoreBishop",
+          "monitoringFoetal",
+        ];
+      case 4: // Analgésie Péridurale
+        return [
+          "demandeAnalgesie",
+          "delaiDemandePose",
+          "heurePose",
+          "produitsUtilises",
+          "difficultesTechniques",
+          "niveauBlocageSensitif",
+          "effetsSecondaires",
+        ];
+      case 5: // Accouchement
+        return [
+          "modeAccouchement",
+          "typeExtraction",
+          "indicationCesarienne",
+          "dureeDeuxiemePhase",
+          "etatNouveauNe",
+        ];
+      case 6: // Satisfaction et Suivi
+        return ["satisfactionPatiente", "complicationsPostPartum"];
       default:
         return [];
     }
@@ -216,14 +263,21 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
     const fieldsToValidate = getFieldsForStep(currentStep);
     const isValid = await trigger(fieldsToValidate as any);
 
-    if (isValid) {
-      setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+    if (!isValid) {
+      return;
     }
+    const formData = methods.getValues() as Patient; // Cast to Patient type
+    if (getPatient(formData.id)) {
+      updatePatient(formData as Patient);
+    } else {
+      addPatient(formData as Patient);
+    }
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep((prev) => prev + 1);
       window.scrollTo(0, 0);
     } else {
-      onSubmit(data);
+      onSubmit(formData as Patient);
     }
   };
 
@@ -238,25 +292,25 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
     router.push("/patients");
   };
 
-  const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
+  // const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
 
   // Show different step components based on current step
   const StepComponent = () => {
     switch (currentStep) {
       case 0:
-        return <FormStep1 data={data} updateFields={updateFields} />;
+        return <FormStep1 />;
       case 1:
-        return <FormStep2 data={data} updateFields={updateFields} />;
+        return <FormStep2 />;
       case 2:
-        return <FormStep3 data={data} updateFields={updateFields} />;
+        return <FormStep3 />;
       case 3:
-        return <FormStep4 data={data} updateFields={updateFields} />;
+        return <FormStep4 />;
       case 4:
-        return <FormStep5 data={data} updateFields={updateFields} />;
+        return <FormStep5 />;
       case 5:
-        return <FormStep6 data={data} updateFields={updateFields} />;
+        return <FormStep6 />;
       case 6:
-        return <FormStep7 data={data} updateFields={updateFields} />;
+        return <FormStep7 />;
       default:
         return null;
     }
@@ -264,40 +318,57 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
 
   return (
     <div className="space-y-6">
-      <FormHeader data={data} updateFields={updateFields} />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit((data) => onSubmit(data as Patient))}>
+          <FormHeader />
 
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">
-          {currentStep + 1}. {STEPS[currentStep]}
-        </h2>
-        <div className="text-sm text-muted-foreground">
-          Étape {currentStep + 1} / {STEPS.length}
-        </div>
-      </div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">
+              {currentStep + 1}. {STEPS[currentStep]}
+            </h2>
+            <div className="text-sm text-muted-foreground">
+              Étape {currentStep + 1} / {STEPS.length}
+            </div>
+          </div>
+          {/* 
+          <Progress
+            max={100}
+            value={Math.min(Math.max(progressPercentage || 0, 0), 100)}
+            className="h-2 mb-8"
+          /> */}
 
-      <Progress value={progressPercentage} className="h-2 mb-8" />
+          <Card className="p-6">
+            <StepComponent />
+          </Card>
 
-      <Card className="p-6">
-        <StepComponent />
-      </Card>
-
-      <div className="flex justify-between pt-4">
-        <div>
-          <Button variant="outline" onClick={handleCancel}>
-            Annuler
-          </Button>
-        </div>
-        <div className="flex gap-2">
-          {currentStep > 0 && (
-            <Button variant="outline" onClick={handlePrevious}>
-              Précédent
-            </Button>
-          )}
-          <Button onClick={handleNext}>
-            {currentStep === STEPS.length - 1 ? "Soumettre" : "Suivant"}
-          </Button>
-        </div>
-      </div>
+          <div className="flex justify-between pt-4">
+            <div>
+              <Button variant="outline" onClick={handleCancel}>
+                Annuler
+              </Button>
+            </div>
+            <div className="flex gap-2">
+              {currentStep > 0 && (
+                <Button variant="outline" onClick={handlePrevious}>
+                  Précédent
+                </Button>
+              )}
+              {/* <Button onClick={handleNext}>
+                {currentStep === STEPS.length - 1 ? "Soumettre" : "Suivant"}
+              </Button> */}
+              {currentStep < STEPS.length ? (
+                <Button type="button" onClick={handleNext}>
+                  {currentStep == STEPS.length - 1 ? "Soumettre" : "Suivant"}
+                </Button>
+              ) : (
+                <Button type="submit" disabled={isSubmitting}>
+                  {"Soumettre"}
+                </Button>
+              )}
+            </div>
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 }

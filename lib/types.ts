@@ -7,8 +7,13 @@ export interface Patient {
   // I. Données Socio-Démographiques
   age: number;
   profession: string;
-  niveauEducation: 'Analphabète' | 'Primaire' | 'Secondaire' | 'Universitaire' | '';
-  situationMatrimoniale: 'Mariée' | 'Célibataire' | 'Divorcée/Veuve' | '';
+  niveauEducation:
+    | "Analphabète"
+    | "Primaire"
+    | "Secondaire"
+    | "Universitaire"
+    | "";
+  situationMatrimoniale: "Mariée" | "Célibataire" | "Divorcée/Veuve" | "";
   origine: string;
   couvertureMedicale: boolean;
   typeCouverture?: string;
@@ -33,7 +38,7 @@ export interface Patient {
 
   // III. Données sur la Grossesse Actuelle
   ageGestationnel: number;
-  suiviPrenatal: 'Régulier' | 'Irrégulier' | '';
+  suiviPrenatal: "Régulier" | "Irrégulier" | "";
   nombreConsultations: number;
   pathologiesAssociees: {
     preEclampsie: boolean;
@@ -45,7 +50,7 @@ export interface Patient {
   };
 
   // IV. Données sur le Travail
-  declenchementTravail: 'Spontané' | 'Médical' | '';
+  declenchementTravail: "Spontané" | "Médical" | "";
   methodesDeclenchement?: string;
   dureeTravail: {
     phaseLatente: number;
@@ -58,7 +63,7 @@ export interface Patient {
   };
 
   // V. Données sur l'Analgésie Péridurale
-  demandeAnalgesie: 'Patient' | 'Équipe médicale' | '';
+  demandeAnalgesie: "Patient" | "Équipe médicale" | "";
   delaiDemandePose: number;
   heurePose: string;
   produitsUtilises: {
@@ -84,7 +89,11 @@ export interface Patient {
   };
 
   // VI. Données sur l'Accouchement
-  modeAccouchement: 'Voie basse spontanée' | 'Extraction instrumentale' | 'Césarienne' | '';
+  modeAccouchement:
+    | "Voie basse spontanée"
+    | "Extraction instrumentale"
+    | "Césarienne"
+    | "";
   typeExtraction?: string;
   indicationCesarienne?: string;
   dureeDeuxiemePhase: number;
@@ -96,11 +105,23 @@ export interface Patient {
   };
 
   // VII. Satisfaction et Suivi
-  satisfactionPatiente: 'Très satisfaite' | 'Satisfaite' | 'Neutre' | 'Insatisfaite' | '';
+  satisfactionPatiente:
+    | "Très satisfaite"
+    | "Satisfaite"
+    | "Neutre"
+    | "Insatisfaite"
+    | "";
   complicationsPostPartum: {
     cephaleesPostPonction: boolean;
     infectionSitePonction: boolean;
     douleursLombairesPersistantes: boolean;
+    autres: boolean;
+    autresDetails?: string;
+  };
+  complicationsTardives: {
+    nevralgieOuDysesthesis: boolean;
+    syndromeQueueCheval: boolean;
+    adherencePeriduraleOuFibrose: boolean;
     autres: boolean;
     autresDetails?: string;
   };

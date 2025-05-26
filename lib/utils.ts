@@ -134,5 +134,11 @@ export function createEmptyPatient() {
       douleursLombairesPersistantes: false,
       autres: false,
     },
+    complicationsTardives: {
+      nevralgieOuDysesthesis: false,
+      syndromeQueueCheval: false,
+      adherencePeriduraleOuFibrose: false,
+      autres: false,
+    },
   };
 }
