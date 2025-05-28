@@ -69,7 +69,7 @@ export function createEmptyPatient() {
 
     // III. Données sur la Grossesse Actuelle
     ageGestationnel: 0,
-    suiviPrenatal: "" as Patient["suiviPrenatal"],
+    suiviPrenatal: "Régulier" as Patient["suiviPrenatal"],
     nombreConsultations: 0,
     pathologiesAssociees: {
       preEclampsie: false,
@@ -79,7 +79,7 @@ export function createEmptyPatient() {
     },
 
     // IV. Données sur le Travail
-    declenchementTravail: "" as Patient["declenchementTravail"],
+    declenchementTravail: "Spontané" as Patient["declenchementTravail"],
     dureeTravail: {
       phaseLatente: 0,
       phaseActive: 0,
@@ -91,7 +91,7 @@ export function createEmptyPatient() {
     },
 
     // V. Données sur l'Analgésie Péridurale
-    demandeAnalgesie: "" as Patient["demandeAnalgesie"],
+    demandeAnalgesie: "Première phase" as Patient["demandeAnalgesie"],
     delaiDemandePose: 0,
     heurePose: "",
     produitsUtilises: {
@@ -115,7 +115,7 @@ export function createEmptyPatient() {
     },
 
     // VI. Données sur l'Accouchement
-    modeAccouchement: "" as Patient["modeAccouchement"],
+    modeAccouchement: "Voie basse spontanée" as Patient["modeAccouchement"],
     dureeDeuxiemePhase: 0,
     etatNouveauNe: {
       apgar1: 0,
@@ -125,7 +125,7 @@ export function createEmptyPatient() {
     },
 
     // VII. Satisfaction et Suivi
-    satisfactionPatiente: "" as Patient["satisfactionPatiente"],
+    satisfactionPatiente: "Très satisfaite" as Patient["satisfactionPatiente"],
     complicationsPostPartum: {
       cephaleesPostPonction: false,
       infectionSitePonction: false,
