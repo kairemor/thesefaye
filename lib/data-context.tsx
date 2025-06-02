@@ -3,7 +3,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Patient } from "@/lib/types";
 import { saveToLocalStorage, loadFromLocalStorage } from "@/lib/storage";
-import { createPatient, updatePatient as updatePatientApi } from "./api";
+import {
+  createPatient,
+  updatePatient as updatePatientApi,
+  getPatients,
+} from "./api";
 
 type DataContextType = {
   patients: Patient[];
@@ -25,9 +29,14 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [patients, setPatients] = useState<Patient[]>([]);
 
   useEffect(() => {
-    const loadedPatients =
-      (loadFromLocalStorage("patients") as Patient[]) || [];
-    setPatients(loadedPatients);
+    const fetchPatients = async () => {
+      const loadedPatients =
+        (loadFromLocalStorage("patients") as Patient[]) || [];
+      const patients = await getPatients();
+      console.log(patients.data.patients);
+      setPatients(patients.data.patients);
+    };
+    fetchPatients();
   }, []);
 
   const addPatient = (patient: Patient) => {
