@@ -262,13 +262,28 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
     const fieldsToValidate = getFieldsForStep(currentStep);
     const isValid = await trigger(fieldsToValidate as any);
 
-    if (!isValid) {
-      return;
-    }
+    // if (!isValid) {
+    //   return;
+    // }
     const formData = methods.getValues() as Patient; // Cast to Patient type
     if (getPatient(formData.id)) {
+      // delete this from form data _id
+      delete formData._id;
+      // delete these properties from form data
+      delete formData.createdAt;
+      delete formData.updatedAt;
+      delete formData.__v;
+      // formData.createdAt = new Date().toISOString();
+      // formData.updatedAt = new Date().toISOString();
+      // remove these properties from form data
+
       updatePatient(formData as Patient);
     } else {
+      delete formData._id;
+      // delete these properties from form data
+      delete formData.createdAt;
+      delete formData.updatedAt;
+      delete formData.__v;
       addPatient(formData as Patient);
     }
 

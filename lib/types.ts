@@ -1,4 +1,8 @@
 export interface Patient {
+  __v: any;
+  updatedAt: any;
+  createdAt: any;
+  _id: any;
   id: string;
   date: string;
   investigateur: string;

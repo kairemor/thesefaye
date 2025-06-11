@@ -38,6 +38,10 @@ export function getTodayDate(): string {
 
 export function createEmptyPatient() {
   return {
+    __v: "",
+    updatedAt: "",
+    createdAt: "",
+    _id: "",
     id: generateId(),
     date: getTodayDate(),
     investigateur: "",
