@@ -41,7 +41,7 @@ export interface Patient {
   allergiesAgent?: string;
 
   // III. Données sur la Grossesse Actuelle
-  ageGestationnel: number;
+  ageGestationnel: string;
   suiviPrenatal: "Régulier" | "Irrégulier" | "";
   nombreConsultations: number;
   pathologiesAssociees: {
@@ -60,7 +60,7 @@ export interface Patient {
     phaseLatente: number;
     phaseActive: number;
   };
-  scoreBishop: number;
+  scoreBishop: string;
   monitoringFoetal: {
     rcfInitial: number;
     rassurant: boolean;
@@ -102,10 +102,10 @@ export interface Patient {
   indicationCesarienne?: string;
   dureeDeuxiemePhase: number;
   etatNouveauNe: {
-    apgar1: number;
-    apgar5: number;
-    phCordon: number;
-    poids: number;
+    apgar1: string;
+    apgar5: string;
+    phCordon: string;
+    poids: string;
   };
 
   // VII. Satisfaction et Suivi

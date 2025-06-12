@@ -65,10 +65,7 @@ const formSchema = z.object({
   allergiesAgent: z.string().optional(),
 
   // Step 3: Grossesse Actuelle
-  ageGestationnel: z
-    .number()
-    .min(22, "L'âge gestationnel doit être d'au moins 22 semaines")
-    .max(42, "L'âge gestationnel doit être au maximum de 42 semaines"),
+  ageGestationnel: z.string(),
   suiviPrenatal: z.string(),
   nombreConsultations: z
     .number()
@@ -93,10 +90,7 @@ const formSchema = z.object({
     phaseLatente: z.number().min(0, "La durée doit être un nombre positif"),
     phaseActive: z.number().min(0, "La durée doit être un nombre positif"),
   }),
-  scoreBishop: z
-    .number()
-    .min(0, "Le score doit être au minimum de 0")
-    .max(13, "Le score doit être au maximum de 13"),
+  scoreBishop: z.string(),
   monitoringFoetal: z.object({
     rcfInitial: z
       .number()
@@ -137,22 +131,10 @@ const formSchema = z.object({
   indicationCesarienne: z.string().optional(),
   dureeDeuxiemePhase: z.number().min(0, "La durée doit être un nombre positif"),
   etatNouveauNe: z.object({
-    apgar1: z
-      .number()
-      .min(0, "Le score doit être au minimum de 0")
-      .max(10, "Le score doit être au maximum de 10"),
-    apgar5: z
-      .number()
-      .min(0, "Le score doit être au minimum de 0")
-      .max(10, "Le score doit être au maximum de 10"),
-    phCordon: z
-      .number()
-      .min(6.8, "Le pH doit être au minimum de 6.8")
-      .max(7.5, "Le pH doit être au maximum de 7.5"),
-    poids: z
-      .number()
-      .min(0.5, "Le poids doit être au minimum de 0.5 kg")
-      .max(6.0, "Le poids doit être au maximum de 6.0 kg"),
+    apgar1: z.string(),
+    apgar5: z.string(),
+    phCordon: z.string(),
+    poids: z.string(),
   }),
 
   // Step 7: Satisfaction et Suivi
@@ -265,7 +247,7 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
     // if (!isValid) {
     //   return;
     // }
-    const formData = methods.getValues() as Patient; // Cast to Patient type
+    const formData = methods.getValues() as unknown as Patient; // Cast to Patient type
     if (getPatient(formData.id)) {
       // delete this from form data _id
       delete formData._id;
@@ -333,7 +315,11 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
   return (
     <div className="space-y-6">
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit((data) => onSubmit(data as Patient))}>
+        <form
+          onSubmit={handleSubmit((data) =>
+            onSubmit(data as unknown as Patient)
+          )}
+        >
           <FormHeader />
 
           <div className="flex items-center justify-between my-4">

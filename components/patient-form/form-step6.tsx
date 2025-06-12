@@ -124,16 +124,16 @@ export function FormStep6() {
                 <FormLabel>Score d'Apgar 1ʳᵉ minute *</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
+                    // type="number"
                     placeholder="Score Apgar à 1 minute"
                     {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value ? parseInt(e.target.value) : 0
-                      )
-                    }
-                    min="0"
-                    max="10"
+                    // onChange={(e) =>
+                    //   field.onChange(
+                    //     e.target.value ? parseInt(e.target.value) : 0
+                    //   )
+                    // }
+                    // min="0"
+                    // max="10"
                     required
                   />
                 </FormControl>
@@ -150,16 +150,16 @@ export function FormStep6() {
                 <FormLabel>Score d'Apgar 5ᵉ minute *</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
+                    // type="number"
                     placeholder="Score Apgar à 5 minutes"
                     {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value ? parseInt(e.target.value) : 0
-                      )
-                    }
-                    min="0"
-                    max="10"
+                    // onChange={(e) =>
+                    //   field.onChange(
+                    //     e.target.value ? parseInt(e.target.value) : 0
+                    //   )
+                    // }
+                    // min="0"
+                    // max="10"
                     required
                   />
                 </FormControl>
@@ -176,17 +176,17 @@ export function FormStep6() {
                 <FormLabel>pH au cordon *</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
+                    // type="number"
                     placeholder="pH au cordon"
                     {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value ? parseFloat(e.target.value) : 0
-                      )
-                    }
-                    step="0.01"
-                    min="6.8"
-                    max="7.5"
+                    // onChange={(e) =>
+                    //   field.onChange(
+                    //     e.target.value ? parseFloat(e.target.value) : 0
+                    //   )
+                    // }
+                    // step="0.01"
+                    // min="6.8"
+                    // max="7.5"
                     required
                   />
                 </FormControl>
@@ -203,17 +203,17 @@ export function FormStep6() {
                 <FormLabel>Poids (kg) *</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
+                    // type="number"
                     placeholder="Poids en kg"
                     {...field}
-                    onChange={(e) =>
-                      field.onChange(
-                        e.target.value ? parseFloat(e.target.value) : 0
-                      )
-                    }
-                    step="0.01"
-                    min="0.5"
-                    max="6"
+                    // onChange={(e) =>
+                    //   field.onChange(
+                    //     e.target.value ? parseFloat(e.target.value) : 0
+                    //   )
+                    // }
+                    // step="0.01"
+                    // min="0.5"
+                    // max="6"
                     required
                   />
                 </FormControl>

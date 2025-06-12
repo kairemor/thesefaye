@@ -72,7 +72,7 @@ export function createEmptyPatient() {
     allergies: false,
 
     // III. Données sur la Grossesse Actuelle
-    ageGestationnel: 0,
+    ageGestationnel: "",
     suiviPrenatal: "Régulier" as Patient["suiviPrenatal"],
     nombreConsultations: 0,
     pathologiesAssociees: {
@@ -88,7 +88,7 @@ export function createEmptyPatient() {
       phaseLatente: 0,
       phaseActive: 0,
     },
-    scoreBishop: 0,
+    scoreBishop: "",
     monitoringFoetal: {
       rcfInitial: 0,
       rassurant: true,
@@ -122,10 +122,10 @@ export function createEmptyPatient() {
     modeAccouchement: "Voie basse spontanée" as Patient["modeAccouchement"],
     dureeDeuxiemePhase: 0,
     etatNouveauNe: {
-      apgar1: 0,
-      apgar5: 0,
-      phCordon: 0,
-      poids: 0,
+      apgar1: "",
+      apgar5: "",
+      phCordon: "",
+      poids: "",
     },
 
     // VII. Satisfaction et Suivi

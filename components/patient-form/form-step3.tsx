@@ -34,14 +34,14 @@ export function FormStep3() {
               <FormLabel>Âge gestationnel (SA) *</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
+                  // type="number"
                   placeholder="Semaines d'aménorrhée"
                   {...field}
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value ? parseInt(e.target.value) : 0
-                    )
-                  }
+                  // onChange={(e) =>
+                  //   field.onChange(
+                  //     e.target.value ? parseInt(e.target.value) : 0
+                  //   )
+                  // }
                   required
                 />
               </FormControl>

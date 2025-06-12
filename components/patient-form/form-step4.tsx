@@ -127,12 +127,11 @@ export function FormStep4() {
             <FormLabel>Score de Bishop à l'admission *</FormLabel>
             <FormControl>
               <Input
-                type="number"
                 placeholder="Score de Bishop"
                 {...field}
-                onChange={(e) =>
-                  field.onChange(e.target.value ? parseInt(e.target.value) : 0)
-                }
+                // onChange={(e) =>
+                //   field.onChange(e.target.value ? parseInt(e.target.value) : 0)
+                // }
                 required
               />
             </FormControl>
