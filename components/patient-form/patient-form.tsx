@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { useData } from "@/lib/data-context";
+import { FormStep8 } from "./form-step8";
 
 const STEPS = [
   "Données Socio-Démographiques",
@@ -25,6 +26,7 @@ const STEPS = [
   "Travail",
   "Analgésie Péridurale",
   "Accouchement",
+  "Informations d'anesthésie",
   "Satisfaction et Suivi",
 ];
 
@@ -45,6 +47,7 @@ const formSchema = z.object({
   origine: z.string().min(1, "L'origine géographique est requise"),
   couvertureMedicale: z.boolean(),
   typeCouverture: z.string().optional(),
+  nom: z.string().optional(),
 
   // Step 2: Antécédents
   antecedentsMedicaux: z.object({
@@ -137,7 +140,19 @@ const formSchema = z.object({
     poids: z.string(),
   }),
 
-  // Step 7: Satisfaction et Suivi
+  // Step 7: Informations d'anesthésie
+
+  niveauPonction: z.string(),
+  espacePeridural: z.string(),
+  catheterFixe: z.string(),
+  bolusTest: z.string().optional(),
+  dilution: z.string().optional(),
+  dureeRealisation: z.string().optional(),
+  niveauSensitif: z.string().optional(),
+  blocMoteur: z.string().optional(),
+  vitesseDebut: z.string().optional(),
+
+  // Step 8: Satisfaction et Suivi
   satisfactionPatiente: z.string(),
   complicationsPostPartum: z.object({
     cephaleesPostPonction: z.boolean(),
@@ -306,6 +321,8 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
       case 5:
         return <FormStep6 />;
       case 6:
+        return <FormStep8 />;
+      case 7:
         return <FormStep7 />;
       default:
         return null;

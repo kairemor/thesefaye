@@ -21,6 +21,7 @@ export interface Patient {
   origine: string;
   couvertureMedicale: boolean;
   typeCouverture?: string;
+  nom: string;
 
   // II. Antécédents
   antecedentsMedicaux: {
@@ -108,7 +109,18 @@ export interface Patient {
     poids: string;
   };
 
-  // VII. Satisfaction et Suivi
+  // VII. Anesthésie
+  niveauPonction: string;
+  espacePeridural: string;
+  catheterFixe: string;
+  bolusTest: string;
+  dilution: string;
+  dureeRealisation: string;
+  niveauSensitif: string;
+  blocMoteur: string;
+  vitesseDebut: string;
+
+  // VIII. Satisfaction et Suivi
   satisfactionPatiente:
     | "Très satisfaite"
     | "Satisfaite"
@@ -129,6 +141,7 @@ export interface Patient {
     autres: boolean;
     autresDetails?: string;
   };
+  complicationsPostNatalNouveauNe: string;
 }
 
 export interface StepProps {

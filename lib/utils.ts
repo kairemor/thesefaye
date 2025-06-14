@@ -54,6 +54,7 @@ export function createEmptyPatient() {
     situationMatrimoniale: "Mariée" as Patient["situationMatrimoniale"],
     origine: "",
     couvertureMedicale: false,
+    nom: "",
 
     // II. Antécédents
     antecedentsMedicaux: {
@@ -128,7 +129,18 @@ export function createEmptyPatient() {
       poids: "",
     },
 
-    // VII. Satisfaction et Suivi
+    // VII. Anesthésie
+    niveauPonction: "",
+    espacePeridural: "",
+    catheterFixe: "",
+    bolusTest: "",
+    dilution: "",
+    dureeRealisation: "",
+    niveauSensitif: "",
+    blocMoteur: "",
+    vitesseDebut: "",
+
+    // VIII. Satisfaction et Suivi
     satisfactionPatiente: "Très satisfaite" as Patient["satisfactionPatiente"],
     complicationsPostPartum: {
       cephaleesPostPonction: false,
@@ -142,5 +154,6 @@ export function createEmptyPatient() {
       adherencePeriduraleOuFibrose: false,
       autres: false,
     },
+    complicationsPostNatalNouveauNe: "",
   };
 }

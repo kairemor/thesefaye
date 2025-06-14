@@ -124,6 +124,23 @@ export function FormStep1() {
           )}
         />
 
+        <FormField
+          control={control}
+          name="nom"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nom de la Patiente</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Préciser le nom de la patiente"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div>
           <FormField
             control={control}

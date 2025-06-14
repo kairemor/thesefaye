@@ -237,6 +237,28 @@ export function FormStep7() {
           />
         )}
       </div>
+
+      <div>
+        <h3 className="text-lg font-medium mb-4">
+          Complications post natal du nouveau né
+        </h3>
+        <FormField
+          control={control}
+          name="complicationsPostNatalNouveauNe"
+          render={({ field }) => (
+            <FormItem>
+              {/* <FormLabel>Complications</FormLabel> */}
+              <FormControl>
+                <Input
+                  placeholder="Préciser la complicatoin natal"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
     </div>
   );
 }
