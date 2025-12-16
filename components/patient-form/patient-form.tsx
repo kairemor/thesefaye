@@ -18,6 +18,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { useData } from "@/lib/data-context";
 import { FormStep8 } from "./form-step8";
+import { FormStep9 } from "./form-step9";
 
 const STEPS = [
   "Données Socio-Démographiques",
@@ -28,6 +29,7 @@ const STEPS = [
   "Accouchement",
   "Informations d'anesthésie",
   "Satisfaction et Suivi",
+  "Efficacité analgésique",
 ];
 
 const formSchema = z.object({
@@ -168,6 +170,34 @@ const formSchema = z.object({
     autres: z.boolean(),
     autresDetails: z.string().optional(),
   }),
+
+  // Step 9: Efficacité analgésique
+  efficaciteAnalgesique: z.object({
+    delaiAction: z.number().min(0, "Le délai doit être un nombre positif"),
+    evaAvantAnalgesie: z
+      .number()
+      .min(0, "L'EVA doit être au moins 0")
+      .max(10, "L'EVA doit être au maximum 10"),
+    eva15min: z
+      .number()
+      .min(0, "L'EVA doit être au moins 0")
+      .max(10, "L'EVA doit être au maximum 10"),
+    eva30min: z
+      .number()
+      .min(0, "L'EVA doit être au moins 0")
+      .max(10, "L'EVA doit être au maximum 10"),
+    evaReinjection: z
+      .number()
+      .min(0, "L'EVA doit être au moins 0")
+      .max(10, "L'EVA doit être au maximum 10"),
+    necessiteReinjection: z.string().optional(),
+    nombreReinjections: z
+      .number()
+      .min(0, "Le nombre doit être un nombre positif"),
+    efficaciteGlobale: z.string().optional(),
+  }),
+
+  nombrePonction: z.number().optional(),
 });
 
 export type PatientForm = z.infer<typeof formSchema>;
@@ -250,6 +280,29 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
         ];
       case 6: // Satisfaction et Suivi
         return ["satisfactionPatiente", "complicationsPostPartum"];
+      case 8: // Informations d'anesthésie
+        return [
+          "niveauPonction",
+          "espacePeridural",
+          "catheterFixe",
+          "bolusTest",
+          "dilution",
+          "dureeRealisation",
+          "niveauSensitif",
+          "blocMoteur",
+          "vitesseDebut",
+        ];
+      case 7: // Efficacité analgésique
+        return [
+          "delaiActionMinutes",
+          "evaAvantAnalgesie",
+          "eva15MinApres",
+          "eva30MinApres",
+          "evaDemandeReinjection",
+          "necessiteReinjection",
+          "nombreReinjections",
+          "efficaciteGlobale",
+        ];
       default:
         return [];
     }
@@ -323,6 +376,8 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
       case 6:
         return <FormStep8 />;
       case 7:
+        return <FormStep9 />;
+      case 8:
         return <FormStep7 />;
       default:
         return null;
