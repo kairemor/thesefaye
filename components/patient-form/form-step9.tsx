@@ -241,7 +241,7 @@ export function FormStep9() {
                 <FormControl>
                   <RadioGroup
                     onValueChange={(value) => field.onChange(Number(value))}
-                    value={field.value.toString()}
+                    value={field.value?.toString()}
                     className="flex gap-6"
                   >
                     <div className="flex items-center space-x-2">
