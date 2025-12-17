@@ -28,8 +28,8 @@ const STEPS = [
   "Analgésie Péridurale",
   "Accouchement",
   "Informations d'anesthésie",
-  "Satisfaction et Suivi",
   "Efficacité analgésique",
+  "Satisfaction et Suivi",
 ];
 
 const formSchema = z.object({
