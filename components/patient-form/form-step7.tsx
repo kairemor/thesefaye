@@ -250,7 +250,7 @@ export function FormStep7() {
               {/* <FormLabel>Complications</FormLabel> */}
               <FormControl>
                 <Input
-                  placeholder="Préciser la complicatoin natal"
+                  placeholder="Préciser la complication néonatale"
                   {...field}
                 />
               </FormControl>

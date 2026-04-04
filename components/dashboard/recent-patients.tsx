@@ -52,7 +52,9 @@ export function RecentPatients() {
       {patients.length > 5 && (
         <div className="pt-2 text-center">
           <Link href="/patients">
-            <Button variant="link">Voir tous les patients</Button>
+            <Button variant="link">
+              Voir tous les patients ({patients.length})
+            </Button>
           </Link>
         </div>
       )}

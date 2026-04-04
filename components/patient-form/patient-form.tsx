@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Check, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Patient } from "@/lib/types";
 import { FormHeader } from "@/components/patient-form/form-header";
 import { FormStep1 } from "@/components/patient-form/form-step1";
@@ -339,7 +341,7 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
 
     if (currentStep < STEPS.length - 1) {
       setCurrentStep((prev) => prev + 1);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       onSubmit(formData as Patient);
     }
@@ -348,7 +350,7 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
   const handlePrevious = () => {
     if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -394,12 +396,42 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
         >
           <FormHeader />
 
-          <div className="flex items-center justify-between my-4">
-            <h2 className="text-xl font-semibold">
-              {currentStep + 1}. {STEPS[currentStep]}
-            </h2>
-            <div className="text-sm text-muted-foreground">
-              Étape {currentStep + 1} / {STEPS.length}
+          {/* Progress stepper */}
+          <div className="my-6">
+            <div className="flex items-center">
+              {STEPS.map((stepName, index) => (
+                <div key={index} className="flex items-center flex-1 last:flex-none">
+                  <div
+                    title={stepName}
+                    className={cn(
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-xs font-semibold transition-colors cursor-default",
+                      index < currentStep
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : index === currentStep
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-muted-foreground/25 bg-background text-muted-foreground/40"
+                    )}
+                  >
+                    {index < currentStep ? <Check className="h-3.5 w-3.5" /> : index + 1}
+                  </div>
+                  {index < STEPS.length - 1 && (
+                    <div
+                      className={cn(
+                        "h-0.5 flex-1 mx-1 transition-colors",
+                        index < currentStep ? "bg-primary" : "bg-muted-foreground/20"
+                      )}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 flex items-baseline justify-between gap-2">
+              <h2 className="text-xl font-semibold">
+                {currentStep + 1}. {STEPS[currentStep]}
+              </h2>
+              <span className="text-sm text-muted-foreground shrink-0">
+                Étape {currentStep + 1} / {STEPS.length}
+              </span>
             </div>
           </div>
 
@@ -407,28 +439,28 @@ export function PatientForm({ initialData, onSubmit }: PatientFormProps) {
 
           <div className="flex justify-between pt-4">
             <div>
-              <Button variant="outline" onClick={handleCancel}>
+              <Button type="button" variant="outline" onClick={handleCancel}>
                 Annuler
               </Button>
             </div>
             <div className="flex gap-2">
               {currentStep > 0 && (
-                <Button variant="outline" onClick={handlePrevious}>
+                <Button type="button" variant="outline" onClick={handlePrevious}>
                   Précédent
                 </Button>
               )}
-              {/* <Button onClick={handleNext}>
-                {currentStep === STEPS.length - 1 ? "Soumettre" : "Suivant"}
-              </Button> */}
-              {currentStep < STEPS.length ? (
-                <Button type="button" onClick={handleNext}>
-                  {currentStep == STEPS.length - 1 ? "Soumettre" : "Suivant"}
-                </Button>
-              ) : (
-                <Button type="submit" disabled={isSubmitting}>
-                  {"Soumettre"}
-                </Button>
-              )}
+              <Button type="button" onClick={handleNext} disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Enregistrement...
+                  </>
+                ) : currentStep === STEPS.length - 1 ? (
+                  "Soumettre"
+                ) : (
+                  "Suivant"
+                )}
+              </Button>
             </div>
           </div>
         </form>

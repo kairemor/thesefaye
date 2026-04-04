@@ -142,6 +142,19 @@ export interface Patient {
     autresDetails?: string;
   };
   complicationsPostNatalNouveauNe: string;
+
+  // IX. Efficacité analgésique
+  efficaciteAnalgesique?: {
+    delaiActionMinutes?: number;
+    evaAvantAnalgesie?: number;
+    eva15MinApres?: number;
+    eva30MinApres?: number;
+    evaDemandeReinjection?: number;
+    necessiteReinjection?: string;
+    nombreReinjections?: number;
+    efficaciteGlobale?: string;
+  };
+  nombrePonction?: number;
 }
 
 export interface StepProps {

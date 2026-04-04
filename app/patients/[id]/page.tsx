@@ -45,7 +45,7 @@ export default function EditPatientPage() {
 
   if (loading) {
     return (
-      <div className="container py-6">
+      <div>
         <Skeleton className="h-10 w-64 mb-6" />
         <div className="space-y-6">
           <Skeleton className="h-[400px] w-full" />
@@ -59,7 +59,7 @@ export default function EditPatientPage() {
   }
 
   return (
-    <div className="container py-6">
+    <div>
       <h1 className="text-3xl font-bold tracking-tight mb-6">
         Modifier Patient #{patient.patientNo || "N/A"}
       </h1>

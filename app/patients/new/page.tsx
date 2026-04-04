@@ -24,13 +24,11 @@ export default function NewPatientPage() {
   };
 
   return (
-    <div className="flex-1">
-      <div className="container py-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-6">
-          Nouveau Patient
-        </h1>
-        <PatientForm initialData={patient} onSubmit={handleSubmit} />
-      </div>
+    <div>
+      <h1 className="text-3xl font-bold tracking-tight mb-6">
+        Nouveau Patient
+      </h1>
+      <PatientForm initialData={patient} onSubmit={handleSubmit} />
     </div>
   );
 }

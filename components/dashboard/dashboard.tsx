@@ -9,16 +9,18 @@ import { Button } from '@/components/ui/button';
 import { exportToCSV } from '@/lib/storage';
 import { Download, Plus } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 export default function Dashboard() {
   const { patients } = useData();
 
   const handleExport = () => {
     exportToCSV(patients, 'patients-analgesie-peridurale.csv');
+    toast.success(`${patients.length} patient${patients.length > 1 ? 's' : ''} exporté${patients.length > 1 ? 's' : ''} avec succès`);
   };
 
   return (
-    <div className="container py-6 space-y-8">
+    <div className="space-y-6">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Tableau de Bord</h1>
@@ -33,7 +35,12 @@ export default function Dashboard() {
               <span>Nouveau Patient</span>
             </Button>
           </Link>
-          <Button variant="outline" onClick={handleExport} disabled={patients.length === 0}>
+          <Button
+            variant="outline"
+            onClick={handleExport}
+            disabled={patients.length === 0}
+            title={patients.length === 0 ? "Ajoutez des patients pour exporter" : "Exporter en CSV"}
+          >
             <Download size={16} className="mr-2" />
             Exporter en CSV
           </Button>
