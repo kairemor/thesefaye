@@ -7,7 +7,7 @@ import { RecentPatients } from '@/components/dashboard/recent-patients';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { exportToCSV } from '@/lib/storage';
-import { Download, Plus } from 'lucide-react';
+import { BarChart2, Download, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
@@ -29,6 +29,12 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Link href="/stats">
+            <Button variant="outline" className="flex items-center gap-2">
+              <BarChart2 size={16} />
+              <span>Statistiques</span>
+            </Button>
+          </Link>
           <Link href="/patients/new">
             <Button className="flex items-center gap-2">
               <Plus size={16} />
